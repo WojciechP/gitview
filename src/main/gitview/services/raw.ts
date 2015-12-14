@@ -1,12 +1,13 @@
 import {Http, Headers} from 'angular2/http';
 import {Observable} from 'rxjs';
+import {Injectable} from 'angular2/core';
 
-import {RawUser, RawShortOrg, RawShortUser, RawShortPull, RawShortRepo} from '../raw-types';
+import {RawUser, RawShortOrg, RawShortUser, RawShortPull, RawShortRepo, RawShortComment} from '../raw-types';
 
 
 const TOKEN = 'e8ce0f4b6b0abffdd17c1adefced8b72cec467fd';
 
-
+@Injectable()
 export class RawGithubService {
   private token: string;
   private headers: Headers;
@@ -30,7 +31,11 @@ export class RawGithubService {
     return this.get<RawUser>('https://api.github.com/user');
   }
 
-  getOrgs(orgsUrl): Observable<RawShortOrg> {
+  getOrgs(): Observable<RawShortOrg> {
+    return this.getArray<RawShortOrg>('https://api.github.com/user/orgs');
+  };
+
+  getOrgsFromUrl(orgsUrl): Observable<RawShortOrg> {
     return this.getArray<RawShortOrg>(orgsUrl);
   }
 
@@ -40,5 +45,9 @@ export class RawGithubService {
 
   getPulls(pullsUrl: string): Observable<RawShortPull> {
     return this.getArray<RawShortPull>(pullsUrl);
+  }
+
+  getComments(commentsUrl: String): Observable<Array<RawShortComment>> {
+    return this.get<Array<RawShortComment>>(commentsUrl);
   }
 };

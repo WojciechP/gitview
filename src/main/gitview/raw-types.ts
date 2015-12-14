@@ -22,6 +22,7 @@ export class RawShortPull {
     assignee: any; //TODO;
     commits_url: string;
     review_comments_url: string;
+    _links: any;
 };
 
 export class RawShortRepo {
@@ -83,3 +84,18 @@ export class RawUser {
   collaborators: number;
   plan: any;
 };
+
+export interface RawShortComment {
+  url: string;
+  id: string;
+  diff_hunk?: string;
+  path?: string;
+  position?: string;
+  original_position?: string;
+  commit_id?: string;
+  original_commit_id?: string;
+  user: RawShortUser;
+  body: string;
+  created_at: string;
+  updated_at: string;
+}

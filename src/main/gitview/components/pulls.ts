@@ -8,8 +8,15 @@ import {PullService, PullShort} from '../services/pulls';
 @View({
   directives: [NgFor],
   template: `<div>
-              <div *ngFor="#pull in pulls">
-                #{{pull.raw.number}} {{pull.raw.title}}
+              <div *ngFor="#pull of pulls">
+                <header>
+                  {{pull.repo.name}}#{{pull.raw.number}}: {{pull.raw.title}}
+                  <ul>
+                    <li *ngFor="#com of pull.comments">
+                      {{com.user.login}}: {{com.body}}
+                    </li>
+                  </ul>
+                </header>
               </div>
             </div>`
 })
@@ -18,7 +25,9 @@ export class PullsComponent {
   pulls: Array<PullShort>;
 
   constructor(pullService: PullService) {
+    this.pulls = [];
     pullService.getPulls().forEach(pull => {
+      console.log('Got pull: ', pull);
       this.pulls.push(pull);
     }, this);
   }

@@ -1,5 +1,6 @@
 import {PullsComponent} from './components/pulls';
 import {PullService} from './services/pulls';
+import {RawGithubService} from './services/raw';
 import {Component, View} from 'angular2/core';
 import {bootstrap} from 'angular2/bootstrap';
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
@@ -19,5 +20,5 @@ export class GVApp {
 }
 
 export function init() {
-  bootstrap(GVApp, [PullService, Http, HTTP_PROVIDERS]);
+  bootstrap(GVApp, [PullService, RawGithubService, Http, HTTP_PROVIDERS]);
 };
