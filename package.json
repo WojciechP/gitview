@@ -1,0 +1,25 @@
+{
+  "name": "gitview",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "angular2": "^2.0.0-alpha.53",
+    "core-js": "^1.2.6",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.13",
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-alpha.14",
+    "ts-loader": "^0.7.2",
+    "typescript": "^1.7.3",
+    "typings": "^0.3.1",
+    "webpack": "^1.12.9",
+    "zone.js": "^0.5.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
