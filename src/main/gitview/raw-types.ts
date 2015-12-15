@@ -23,6 +23,8 @@ export class RawShortPull {
     commits_url: string;
     review_comments_url: string;
     _links: any;
+    base: {repo: any};
+
 };
 
 export class RawShortRepo {
@@ -98,4 +100,30 @@ export interface RawShortComment {
   body: string;
   created_at: string;
   updated_at: string;
+}
+
+
+export interface IGitUser {
+  name: string;
+  email: string;
+  date: string;
+}
+
+export interface IShortGitCommit {
+  author: IGitUser;
+  committer: IGitUser;
+  message: string;
+  tree: any;
+  url: string;
+  comment_count: number;
+}
+export interface RawShortCommit {
+  sha: string;
+  commit: IShortGitCommit;
+  url: string;
+  html_url: string;
+  comments_url: string;
+  author: RawShortUser;
+  committer: RawShortUser;
+
 }

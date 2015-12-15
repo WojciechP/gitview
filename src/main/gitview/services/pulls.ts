@@ -1,15 +1,20 @@
 import {Observable} from 'rxjs';
 
 import {RawGithubService} from './raw';
-import {RawShortPull, RawShortOrg, RawShortRepo, RawShortComment} from '../raw-types';
+import {RawShortPull, RawShortOrg, RawShortRepo, RawShortComment, RawShortCommit} from '../raw-types';
 import {Injectable} from 'angular2/core';
 
 
 export class PullShort {
+  get number() {
+    return this.raw.number;
+  }
+
   constructor(
     public raw: RawShortPull,
     public repo: RawShortRepo,
-    public comments: Array<RawShortComment>) {}
+    public comments: Array<RawShortComment>,
+    public commits: Array<RawShortCommit>) {}
 }
 
 class RepoShort {
@@ -31,9 +36,12 @@ export class PullService {
     let rawPulls = rawRepos.flatMap(repo => {
       let url = repo.pulls_url.replace('{/number}', '');
       return this.rawService.getPulls(url).flatMap<PullShort>(pull => {
-        console.log('Fetching comms for ', pull);
         let comments = this.rawService.getComments(pull._links['comments']['href']);
-        return comments.map(coms => new PullShort(pull, repo, coms));
+        let commits = this.rawService.getCommits(pull._links['commits']['href']);
+
+        return comments.flatMap(comments => {
+          return commits.map(commits => new PullShort(pull, repo, comments, commits))
+        });
       });
     });
     return rawPulls;

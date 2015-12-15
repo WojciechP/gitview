@@ -2,7 +2,7 @@ import {Http, Headers} from 'angular2/http';
 import {Observable} from 'rxjs';
 import {Injectable} from 'angular2/core';
 
-import {RawUser, RawShortOrg, RawShortUser, RawShortPull, RawShortRepo, RawShortComment} from '../raw-types';
+import {RawUser, RawShortOrg, RawShortUser, RawShortPull, RawShortRepo, RawShortComment, RawShortCommit} from '../raw-types';
 
 
 const TOKEN = 'e8ce0f4b6b0abffdd17c1adefced8b72cec467fd';
@@ -49,5 +49,9 @@ export class RawGithubService {
 
   getComments(commentsUrl: String): Observable<Array<RawShortComment>> {
     return this.get<Array<RawShortComment>>(commentsUrl);
+  }
+
+  getCommits(commitsUrl: string): Observable<Array<RawShortCommit>> {
+    return this.get<Array<RawShortCommit>>(commitsUrl);
   }
 };
