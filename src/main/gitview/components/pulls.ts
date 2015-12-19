@@ -1,40 +1,53 @@
 import {Component, View} from 'angular2/core';
-import {NgFor} from 'angular2/common';
-import {PullActivityService, PullRequest} from '../services/pullActivity';
-import {PullActivityComponent} from './pullActivity';
+import {NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault} from 'angular2/common';
+
+import {PullRequest, Repo, Comment} from '../../gitconnect/ifaces';
+import {GitconnectService} from '../../gitconnect/services';
+import {ReviewablePull, ReviewService} from '../services';
+import {CommentComponent} from './comment';
+import {CommitComponent} from './commit';
+
 
 @Component({
   selector: 'gv-pulls'
 })
 @View({
-  directives: [NgFor, PullActivityComponent],
-  template: `<div>
-              <div *ngFor="#pull of pulls">
-                <header>
-                  {{pull.repo.name}}#{{pull.number}}: {{pull.title}}
-                  Activities:
-                  <gv-pull-activity [activityLog]="pull.activityLog">
-                  </gv-pull-activity>
-                  <ul>
-                    <li *ngFor="#com of pull.raw.comments">
-                      {{com.user.login}}: {{com.body}}
-                    </li>
-                    <li *ngFor="#com of pull.raw.commits">
-                      {{com.sha}}: {{com.commit.message}} by
-                    </li>
-                  </ul>
-                </header>
-              </div>
-            </div>`
+  directives: [CommitComponent, CommentComponent, NgSwitch, NgSwitchWhen, NgSwitchDefault],
+  template: `
+    <ul class="pulls">
+      <li *ngFor="#pull of pulls">
+        <header>PR {{pull.pull.repo.name}}#{{pull.pull.number}}: {{pull.pull.title}}</header>
+        <ul class="entries">
+          <li *ngFor="#entry of pull.entries" [ngSwitch]="entry.type">
+            <template [ngSwitchWhen]="'comment'">
+              <gv-comment [comment]="entry.content"></gv-comment>
+            </template>
+            <template [ngSwitchWhen]="'commit'">
+              <gv-commit [commit]="entry.content"></gv-commit>
+            </template>
+            <template ngSwitchDefault>Unknown type</template>
+          </li>
+        </ul>
+      </li>
+    </ul>`
 })
 export class PullsComponent {
+  pulls: Array<ReviewablePull>
 
-  pulls: Array<PullRequest>;
+  upsertPull(pull: ReviewablePull) {
+    this.pulls = this.pulls.filter(t => t.pull.raw.id != pull.pull.raw.id);
+    this.pulls.push(pull);
+    this.pulls = this.pulls.sort((a, b) => b.lastActive.getTime() - a.lastActive.getTime())
 
-  constructor(pullActivityService: PullActivityService) {
+  }
+
+  constructor(private gitConnect: GitconnectService, private reviews: ReviewService) {
     this.pulls = [];
-    pullActivityService.getPullsActivity().forEach(pull => {
-      this.pulls.push(pull);
-    }, this);
+    gitConnect.getOrgs()
+      .flatMap<Repo>(org => gitConnect.getRepos(org))
+      .flatMap<PullRequest>(repo => gitConnect.getPulls(repo))
+      .flatMap<ReviewablePull>(pull => reviews.reviewPull(pull))
+      .forEach(this.upsertPull, this);
+
   }
 }

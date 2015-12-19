@@ -22,11 +22,17 @@
     "buildOnSave": false,
     "files": [
         "src/main/app.ts",
+        "src/main/gitconnect/ifaces.ts",
+        "src/main/gitconnect/index.ts",
+        "src/main/gitconnect/raw-ifaces.ts",
+        "src/main/gitconnect/services.ts",
+        "src/main/gitview/components/app.ts",
+        "src/main/gitview/components/comment.ts",
+        "src/main/gitview/components/commit.ts",
+        "src/main/gitview/components/index.ts",
         "src/main/gitview/components/pulls.ts",
         "src/main/gitview/index.ts",
-        "src/main/gitview/raw-types.ts",
-        "src/main/gitview/services/pulls.ts",
-        "src/main/gitview/services/raw.ts"
+        "src/main/gitview/services.ts"
     ],
     "atom": {
         "rewriteTsconfig": true

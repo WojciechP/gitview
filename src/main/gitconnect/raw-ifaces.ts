@@ -1,6 +1,6 @@
 
 
-export class RawShortUser {
+export interface ShortUser {
   login: string;
   id: number;
   url: string;
@@ -8,26 +8,27 @@ export class RawShortUser {
 
 }
 
-export class RawShortPull {
+export interface ShortPull {
     url: string;
     id: number;
     number: number;
     state: string;
     title: string;
     description: string;
-    user: RawShortUser;
+    user: ShortUser;
     body: string;
     created_at: string;
     updated_at: string;
     assignee: any; //TODO;
     commits_url: string;
     review_comments_url: string;
+    comments_url: string;
     _links: any;
     base: {repo: any};
 
 };
 
-export class RawShortRepo {
+export interface ShortRepo {
   id: number;
   name: string;
   full_name: string;
@@ -37,7 +38,7 @@ export class RawShortRepo {
   pulls_url: string;
 };
 
-export class RawShortOrg {
+export class ShortOrg {
   login: string;
   id: number;
   url: string;
@@ -48,7 +49,7 @@ export class RawShortOrg {
 };
 
 
-export class RawUser {
+export interface User {
   login: string;
   id: number;
   avatar_url: string;
@@ -87,7 +88,7 @@ export class RawUser {
   plan: any;
 };
 
-export interface RawShortComment {
+export interface ShortComment {
   url: string;
   id: string;
   diff_hunk?: string;
@@ -96,34 +97,35 @@ export interface RawShortComment {
   original_position?: string;
   commit_id?: string;
   original_commit_id?: string;
-  user: RawShortUser;
+  user: ShortUser;
   body: string;
   created_at: string;
   updated_at: string;
 }
 
 
-export interface IGitUser {
+export interface GitAudit {
   name: string;
   email: string;
   date: string;
 }
 
-export interface IShortGitCommit {
-  author: IGitUser;
-  committer: IGitUser;
+export interface GitCommit {
+  author: GitAudit;
+  committer: GitAudit;
   message: string;
   tree: any;
   url: string;
   comment_count: number;
 }
-export interface RawShortCommit {
+
+export interface ShortCommit {
   sha: string;
-  commit: IShortGitCommit;
+  commit: GitCommit;
   url: string;
   html_url: string;
   comments_url: string;
-  author: RawShortUser;
-  committer: RawShortUser;
+  author: ShortUser;
+  committer: ShortUser;
 
 }
