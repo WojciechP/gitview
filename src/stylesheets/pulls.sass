@@ -1,0 +1,29 @@
+@import common
+
+$pr-padding: 20px
+
+
+.pulls
+  > li
+    list-style: none
+    border: 1px solid $cl-medium-gray
+    border-radius: 6px
+    max-width: 1000px
+    margin: 2em
+
+    header
+      border-bottom: 1px solid $cl-medium-gray
+      padding: $pr-padding
+      .repo
+        color: $cl-medium-gray
+      .number::before
+        content: '#'
+      
+    ul
+      padding: $pr-padding
+
+  .comment
+    .body
+      white-space: pre
+      font-family: preformatted
+      background: $cl-light-gray

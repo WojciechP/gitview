@@ -31,6 +31,7 @@
         "src/main/gitview/components/commit.ts",
         "src/main/gitview/components/index.ts",
         "src/main/gitview/components/pulls.ts",
+        "src/main/gitview/components/relative-date.ts",
         "src/main/gitview/index.ts",
         "src/main/gitview/services.ts"
     ],

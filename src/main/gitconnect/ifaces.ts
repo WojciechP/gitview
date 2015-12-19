@@ -26,9 +26,11 @@ export class Repo {
 export class PullRequest {
   number: number;
   title: string;
+  url: string;
   constructor(public raw: raw.ShortPull, public repo: Repo) {
     this.number = raw.number;
     this.title = raw.title;
+    this.url = raw._links['html']['href'];
   }
 }
 

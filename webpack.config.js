@@ -14,6 +14,7 @@ module.exports = {
       'angular2/router',
       'angular2/http'
     ],
+    style: './src/main/styles.js',
     app: './src/main/app.ts'
   },
   output: {
@@ -24,8 +25,8 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.html'],
-    modulesDirectories: ['src/main', 'node_modules']
+    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.html', '.css', '.sass'],
+    modulesDirectories: ['src/main', 'src/stylesheets', 'node_modules']
   },
   module: {
     loaders: [
@@ -34,8 +35,13 @@ module.exports = {
         loader: 'ts-loader',
         exclude: ['node_modules/']
       },
-      { test: /\.html$/,  loader: 'raw' }
+      { test: /\.html$/,  loader: 'raw' },
+      { test: /\.css$/, loader: "style!css" },
+      { test: /\.sass$/, loaders: ['style', 'css', 'sass'] }
     ]
+  },
+  sassLoader: {
+    indentedSyntax: true
   },
   plugins: [
     new CommonsChunkPlugin({ name: 'angular2', filename: 'angular2.js', minChunks: Infinity }),
