@@ -11,19 +11,21 @@ $pr-padding: 20px
     max-width: 1000px
     margin: 2em
 
-    header
+    > header
       border-bottom: 1px solid $cl-medium-gray
       padding: $pr-padding
-      .repo
+      .repo, .number
         color: $cl-medium-gray
       .number::before
         content: '#'
-      
-    ul
+
+    > ul
       padding: $pr-padding
+      > li
+        display: none
+      > li:nth-last-child(-n+4)
+        display: block
 
   .comment
     .body
-      white-space: pre
-      font-family: preformatted
       background: $cl-light-gray

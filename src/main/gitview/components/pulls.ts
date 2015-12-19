@@ -17,9 +17,8 @@ import {CommitComponent} from './commit';
     <ul class="pulls">
       <li *ngFor="#pull of pulls">
         <header>
-          <span class="repo">{{pull.pull.repo.name}}</span>
           <a href="{{pull.pull.url}}">
-            <span class="number">{{pull.pull.number}}</span>
+            <span class="repo">{{pull.pull.repo.name}}</span><span class="number">{{pull.pull.number}}</span>
             <span class="title">{{pull.pull.title}}</span>
           </a>
         </header>
