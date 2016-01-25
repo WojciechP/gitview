@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import * as raw from './raw-ifaces';
 import {User, Organization, Repo, PullRequest, Comment, Commit} from './ifaces';
 
-const TOKEN = 'e8ce0f4b6b0abffdd17c1adefced8b72cec467fd';
+const TOKEN = PUT YOUR GITHUB TOKEN HERE;
 
 @Injectable()
 export class GitconnectService {
